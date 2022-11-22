@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head.ejs') %> 
+<body>
+    <%- include('../partials/header.ejs') %> 
+
+    <h1 style="text-align:center;">Edit Sight</h1>
+    <div class="container d-flex justify-content-center">
+
+        <form class="row gy-2 gx-3 align-items-center" action="/attractions/<%=attractions.id%>?_method=PUT" method="POST">
+
+            <div class="row g-3">
+
+                <div class="col-md-12">
+                    <label for="destinationName">Destination</label><br/>
+                    <select class="form-select" aria-label="Default select example" name="locationsId">
+                        <% for(let i = 0; i < locations.length; i++) { %>
+                            <option value="<%=locations[i]._id%>"
+                                <% if(locations[i]._id.toString() === locationAttraction._id.toString()){ %>
+                                    selected
+                                <% } %> 
+                                >
+                                <%=locations[i].location%>
+                            </option>
+                        <% } %>
+                    </select>
+                    <p style="margin-top: 2px;">Don't see the Destination? Add Yourself <a href="/locations/new">here</a>.</p>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Attraction</label>
+                    <input type="text" class="form-control" id="Input2" name="place" required placeholder="Name" value="<%=attractions.place%>"/><br/>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Ticket</label>
+                    <input type="text" class="form-control" id="Input5" name="price" placeholder="Average price" value="<%=attractions.price%>"/><br/>
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label">Image</label>
+                    <input type="text" class="form-control" id="Input6" name="image" placeholder="Paste image URL" value="<%=attractions.image%>"/><br/>
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label">About</label>
+                    <textarea type="text" class="form-control" id="Input7" name="descriptionOfPlace" placeholder="Add some information about the Attraction" value="<%=attractions.descriptionOfPlace%>"></textarea><br/>
+                </div>
+
+                <button type="button" class="btn btn-outline-success" style="margin-bottom: 20px;">
+                    <input type="submit" value='Submit Changes' style='border: none; background: none;'/>
+                </button>
+            </div>
+        </form>
+    </div>
+    
+</body>
+</html>

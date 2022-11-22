@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../partials/head.ejs') %> 
+<body>
+    <%- include('../partials/header.ejs') %> 
+
+    <h1>Attractions from all over the World</h1>
+
+    <div class="container-fluid">
+        <div class="row row-cols-4">
+            <% for(let i = 0; i < attractions.length; i++) { %> 
+                <div class="col">
+                    <a href="/attractions/<%=attractions[i].id%>">
+                        <img src="<%=attractions[i].image%>" class="img-thumbnail" />
+                        <p style="text-align: center;"><%=attractions[i].place%></p>
+                    </a>
+                </div>
+            <% } %> 
+        </div>
+    </div>
+
+
+
+    
+</body>
+</html>

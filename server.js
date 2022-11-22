@@ -11,13 +11,18 @@ const methodOverride = require('method-override');
 app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method'))
 
+app.use(express.json());
+
 const locationsController = require('./controllers/locations.js');
 app.use(locationsController);
 
+const attractionsController = require('./controllers/attractions.js');
+app.use(attractionsController);
 
-const Location = require('./models/travelSchema.js') // --- on controllers folder
-const Attractions = require('./models/attractions.js'); // --- on controllers folder
-const Attraction = require('./models/attractions.js');
+
+// const Location = require('./models/travelSchema.js') // --- on controllers folder
+// const Attractions = require('./models/attractions.js'); // --- on controllers folder
+// const Attraction = require('./models/attractions.js');
 
 // HOROKU HAS A ENVORIMENT VARIABLE, and port is a port that horoku will set up... so we create a variable PORT 3000, so if im running locally it runs on PORT 3000 but if its on horoku we assing PORT=process.env.PORT
 let PORT= 3000

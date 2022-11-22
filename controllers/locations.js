@@ -21,6 +21,10 @@ router.get('/locations/new', (req, res) => {
 // ----- post route 
 
 router.post('/locations', (req, res) => {
+
+    // add attractions key value to new destination 
+    req.body.attractions = []
+
     Location.create(req.body, (error, createdLocation) => {
         res.redirect('/locations')
     })
@@ -39,18 +43,18 @@ router.get('/locations/:id', (req, res) => {
     });
 })
 
-router.get('/locations/spots/:id', (req, res) => {
-    Location.find({touristicSpots: req.params.id}, (err,foundSpots) => {
-        console.log(foundSpots)
-        res.render(
-            'location/touristicShow.ejs',
-            {
-                locations: foundSpots
-            }
+// router.get('/locations/spots/:id', (req, res) => {
+//     Location.find({touristicSpots: req.params.id}, (err,foundSpots) => {
+//         console.log(foundSpots)
+//         res.render(
+//             'location/touristicShow.ejs',
+//             {
+//                 locations: foundSpots
+//             }
 
-        )
-    })
-})
+//         )
+//     })
+// })
 
 // ----- index route 
 
@@ -73,13 +77,27 @@ router.get('/locations', (req, res) => {
 
 router.delete('/locations/:id', (req, res) => {
     Location.findByIdAndRemove(req.params.id, (err, data) => {
-        res.redirect('/locations')
+        const attractionIDs = []
+        for (let i= 0; i < data.attractions.length; i++) {
+            attractionIDs.push(data.attractions[i].id)
+        }
+        Attraction.findByIdAndRemove(
+            {
+                _id: {
+                    $in: attractionIDs
+                }
+
+            }, (err, data) => {
+                res.redirect('/locations')
+            }
+        )
+        
     })
 })
 
 // ----- edit route 
 
-router.put('locations/:id', (req, res) => {
+router.put('/locations/:id', (req, res) => {
     Location.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err, uptadedLocation) => {
         res.redirect('/locations')
     })
