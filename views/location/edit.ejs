@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../partials/head.ejs') %> 
+<body>
+<%- include('../partials/header.ejs') %> 
+
+    <h1 style="text-align:center;">Edit <%=locations.location%></h1>
+
+    <div class="container d-flex justify-content-center">
+
+        <form class="row gy-2 gx-3 align-items-center" action="/locations/<%=locations.id%>?_method=PUT" method="POST">
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label class="form-label">Destination</label>
+                    <input type="text" class="form-control" id="Input2" name="location" required placeholder="Name" value="<%=locations.location%>"/><br/>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Typical Food</label>
+                    <input type="text" class="form-control" id="Input3" name="food" placeholder="food1, food2" value="<%=locations.food%>"/><br/>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Airplane Ticket</label>
+                    <input type="text" class="form-control" id="Input4" name="flightPrice" placeholder="Average price" value="<%=locations.flightPrice%>"/><br/>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Hotel Price</label>
+                    <input type="text" class="form-control" id="Input5" name="hotelPrice" placeholder="Average price" value="<%=locations.hotelPrice%>"/><br/>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Image of Destination</label>
+                    <input type="text" class="form-control" id="Input6" name="img" placeholder="Paste image URL" value="<%=locations.img%>"/><br/>
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label">About the Destination</label>
+                    <textarea type="text" class="form-control" id="Input7" name="description"value="<%=locations.description%>"></textarea><br/>
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label">Book a Flight</label>
+                    <input type="text" class="form-control" id="Input8" name="bookingLink" placeholder="Paste link to book a flight" value="<%=locations.bookingLink%>"/><br/>
+                </div>
+               
+                <button type="button" class="btn btn-outline-success" style="margin-bottom: 20px;">
+                    <input type="submit" value='Confirm Changes' style='border: none; background: none;'/>
+                </button>
+
+            </div>
+        </form>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('./partials/head.ejs') %> 
+<body>
+    <%- include('./partials/header.ejs') %> 
+    hi
+    <div class="container">
+        <img src="<%=locations.imageOfAttraction%>" class="img-thumbnail"/>
+        <table class="table table-sucess table-striped">
+            <tr>
+                <td>
+                    <%=locations.place%> 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <%=locations.descriptionOfPlace%> 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <%=locations.price%> 
+                </td>
+        </table>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../partials/head.ejs') %> 
+<body>
+    <%- include('../partials/header.ejs') %> 
+    <div class="container">
+        <img src="<%=locations.img%>" class="img-thumbnail"/>
+        <table class="table table-sucess table-striped">
+            <tr>
+                <td>
+                    <%=locations.description%> 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <%=locations.food%> 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <%=locations.hotelPrice%> 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <%=locations.fligtPrice%> 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <%=locations.bookingLink%> 
+                </td>
+            </tr>
+        </table>
+        <button type="button" id="delete-location" class="btn btn-danger">
+            <form action="/locations/<%=locations.id%>?_method=DELETE" method="POST">
+                <input type="submit" value="Delete Destination" style='border: none; color: black; background: none;'/>
+            </form>
+        </button>
+
+        <button type="button" id="try" class="btn btn-outline-success">
+            <a href="/locations/<%=locations.id%>/edit" style='text-decoration: none; color: black; background: none;'>Edit Destination</a>
+        </button>
+
+        <div class="container-fluid">
+            <div class="row row-cols-2">
+                <% for (let i= 0; i < locations.attractions.length; i++ ){ %>
+                    <div class="col">
+                        <a href="/locations/<%=locations.attractions[i].id%>"> 
+                            <img src="<%=locations.attractions[i].image%>" class="img-thumbnail" />
+                            <p style="text-align: center;"><%=locations.attractions[i].place%></p>
+                        </a>
+                    </div>
+                <% } %>      
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+
+</body>
+</html>
