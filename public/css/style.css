@@ -1,0 +1,36 @@
+.navbar-brand{
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.nav-item{
+    color: white
+}
+
+#container-index2{
+    margin-top: 4rem;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.animation-hover:hover{
+    text-decoration: none;
+    color: rgb(27, 71, 28);
+}
+.animation-hover:after{
+    content: '';
+    display: block;
+    width: 0%;
+    height: 2px;
+    margin-top: 0.2em;
+    background: rgb(231, 20, 20);
+    transition: 0.7s ease-in-out;
+}
+
+.animation-hover:hover:after{
+    width: 100%;
+}
