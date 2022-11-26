@@ -129,6 +129,14 @@ html{
 
 /* ======== footer ========= */
 
+#h5{
+    color: rgb(207, 203, 203);
+    font-weight: bold;
+}
+
+#p{
+    color: rgb(163, 160, 160);
+}
 .socials{
     list-style: none;
     display: flex;
