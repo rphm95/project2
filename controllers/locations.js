@@ -43,18 +43,6 @@ router.get('/locations/:id', (req, res) => {
     });
 })
 
-// router.get('/locations/spots/:id', (req, res) => {
-//     Location.find({touristicSpots: req.params.id}, (err,foundSpots) => {
-//         console.log(foundSpots)
-//         res.render(
-//             'location/touristicShow.ejs',
-//             {
-//                 locations: foundSpots
-//             }
-
-//         )
-//     })
-// })
 
 // ----- index route 
 
@@ -63,14 +51,41 @@ router.get('/', (req, res) => {
 })
 
 router.get('/locations', (req, res) => {
-    Location.find({}, (err, data) => {
-        res.render(
-            'location/index2.ejs',
-            {
-                locations: data
-            }
-        );
-    })
+    console.log(req.body.sortBy)
+    if(req.body.sortBy === "mostRecent"){
+        Location.find({}, (err, foundLocation) => {
+            res.render(
+                'location/index2.ejs',
+                {
+                    locations: foundLocation,
+                    select: "recent"
+                }
+            )
+        }).sort({updatedAt: 1})
+    } else if (req.body.sortBy === "locationName") {
+        Location.find({}, (err, foundLocation) => {
+            res.render(
+                'location/index2.ejs',
+                {
+                    locations: foundLocation,
+                    select: "alphabetically"
+                }
+            )
+        }).sort({location: 1})
+         
+    } else {
+        Location.find({}, (err, data) => {
+            res.render(
+                'location/index2.ejs',
+                {
+                    locations: data,
+                    select: "none"
+                }
+            );
+        })
+    }
+
+    
 })
 
 // ----- delete route 
@@ -113,6 +128,17 @@ router.get('/locations/:id/edit', (req, res) => {
     })
 })
 
+
+// ------ search bar 
+// router.post('/destination/', (req, res) => {
+//     Location.find(req.body, (err, data) => {
+//         res.render('location/locationShow.ejs',
+//             {
+//                 locations: data
+//             }
+//         )
+//     })
+// })
 
 
 module.exports = router;
