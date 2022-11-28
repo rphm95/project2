@@ -52,7 +52,7 @@ router.get('/', (req, res) => {
 
 router.get('/locations', (req, res) => {
     console.log(req.body.sortBy)
-    if(req.body.sortBy === "mostRecent"){
+    if(req.query.sortBy === "mostRecent"){
         Location.find({}, (err, foundLocation) => {
             res.render(
                 'location/index2.ejs',
@@ -62,7 +62,8 @@ router.get('/locations', (req, res) => {
                 }
             )
         }).sort({updatedAt: 1})
-    } else if (req.body.sortBy === "locationName") {
+
+    } else if (req.query.sortBy === "locationName") {
         Location.find({}, (err, foundLocation) => {
             res.render(
                 'location/index2.ejs',

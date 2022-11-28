@@ -16,14 +16,17 @@
             </p>
         
             <p>
+                <h5>Food:</h5>
             Typical food: <%=locations.food%>.
             </p>
         
             <p>
+                <h5>Hotel:</h5>
             Average price for hotels: $<%=locations.hotelPrice%>. 
             </p>
     
             <p>
+                <h5>Flight:</h5>
                 Usually the flight cost goes around: $<%=locations.flightPrice%> per person.
             </p>
 
@@ -44,6 +47,8 @@
         
         
         <div class="container-fluid" id="container-index2">
+            <h4>While in <%=locations.location%>, don't forget to visit:</h4>
+            
             <div class="row row-cols-2 row-cols-md-3 g-4">
             
                 <% for(let i = 0; i < locations.attractions.length; i++) { %>

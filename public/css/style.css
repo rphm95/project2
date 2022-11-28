@@ -83,6 +83,19 @@ p{
     word-spacing: 2px;
 }
 
+h4{
+    color: rgb(94, 25, 39);
+    margin-bottom: 5%;
+    margin-top: 3%;
+}
+
+/* ---index2 page sortBy */
+#sort{
+    display: flex;
+    justify-content: flex-end;
+}
+
+
 /* ====================== attractions css ================= */
 html{
     height: 100%;
