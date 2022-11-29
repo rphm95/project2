@@ -88,7 +88,7 @@ app.get('/seed', (req, res) => {
         {
             img: "https://www.fodors.com/wp-content/uploads/2022/03/Hero-UltimateNYC-shutterstock_327064844.jpg",
             location: "New York",
-            food: ["Pizza", "Baggle"],
+            food: ["Pizza", "Bagel"],
             flightPrice: "200",
             attractions: [],
             hotelPrice: "250",

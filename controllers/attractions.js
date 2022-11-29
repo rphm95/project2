@@ -35,14 +35,40 @@ router.post('/attractions', (req, res) => {
 // ----- index route
 
 router.get('/attractions', (req, res) => { 
-    Attraction.find({}, (err, attractions) => {
-        res.render('attractions/index.ejs',
-            {
-                attractions: attractions
+    if(req.query.sortBy === "mostRecent"){  // if statement for sorting by most recent
+        Attraction.find({}, (err, foundAttraction) => {
+            res.render(
+                'attractions/index.ejs',
+                {
+                    attractions: foundAttraction,
+                    select: "recent"
+                }
+            )
+        }).sort({updatedAt: 1})
 
-            }
-        )
-    })
+    } else if (req.query.sortBy === "locationName") { // else if statement for sorting by attractions name alphabetically
+        Attraction.find({}, (err, foundAttraction) => {
+            res.render(
+                'attractions/index.ejs',
+                {
+                    attractions: foundAttraction,
+                    select: "alphabetically"
+                }
+            )
+        }).sort({place: 1})
+         
+    } else { // else statement in case nothing is selected 
+        Attraction.find({}, (err, data) => {
+            res.render(
+                'attractions/index.ejs',
+                {
+                    attractions: data,
+                    select: "none"
+                }
+            );
+        })
+    }
+
 })
 
 // ----- show route
