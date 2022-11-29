@@ -66,6 +66,22 @@ app.get('/seed', (req, res) => {
         },
         (error, data) => {}
     );
+    
+    // create Las Vegas
+    Location.create(
+        {
+            img: "https://content.r9cdn.net/rimg/dimg/60/fa/63274ccd-city-35107-174d647bfe3.jpg?width=1200&height=630&crop=true",
+            location: "Las Vegas",
+            food: ["Dirty Corn", "Sage Fried Chicken And Waffles"],
+            flightPrice: "250",
+            attractions: [],
+            hotelPrice: "180",
+            description: "Las Vegas, city, seat (1909) of Clark county, southeastern Nevada. The only major city in the American West to have been founded in the 20th century, Las Vegas grew from a tiny, desert-bound railroad service centre at the outset of the 20th century to the country’s fastest-growing metropolis at century’s end. This transformation—made possible by a combination of shrewd entrepreneurship, access to water, an extensive transportation network, and permissive state laws—has created the city now often known simply as “Vegas,” a place of vast casinos, elaborate hotels, and spectacular entertainment venues that attracts masses of visitors from throughout the world. Las Vegas is a place of million-lightbulb signs and fantastic architecture. Within the city stand the largest glass pyramid in the world; one of the largest hotels in the country, with more than 5,000 rooms; and one of the most expensive hotels ever constructed, the Bellagio.",
+            bookingLink: "https://www.expedia.com/Las-Vegas.d178276.Destination-Travel-Guides?semcid=US.UB.GOOGLE.DL-DSA-c-EN.PACKAGE&semdtl=a114128097693.b1123783552405.g1aud-1210701017259:dsa-1313886024369.l1.e1c.m1Cj0KCQiA-JacBhC0ARIsAIxybyPk-z0asNXLfgB87JoosGpVWJAoBF4SU3y-I1FRuO5_vHReKTdcRhIaAha2EALw_wcB.r1.c1.j19004345.k1.d1536958707670.h1.i138925977689.n1.o1.p1.q1.s1.t1.x1.f1.u1.v1.w1&gclid=Cj0KCQiA-JacBhC0ARIsAIxybyPk-z0asNXLfgB87JoosGpVWJAoBF4SU3y-I1FRuO5_vHReKTdcRhIaAha2EALw_wcB"
+    
+        },
+        (error, data) => {}
+    );
 
     //create New York
     Location.create(
@@ -176,6 +192,54 @@ app.get('/seed/spots', (req, res) => {
             })
         }
     )
+    
+    // Create Las Vegas Attractions 
+    Attractions.create(
+        {
+            place: "Area15",
+            image: "https://assets.simpleviewcms.com/simpleview/image/fetch/c_limit,q_75,w_1200/https://lasvegas.simpleviewcrm.com/images/listings/original_AREA15_C82221DB-0F46-6047-9F07638049BA2E06-c8222106f3d9e9f.jpg",
+            descriptionOfPlace: "AREA15, located minutes from the Las Vegas Strip, represents the world's first purpose-built immersive entertainment district offering live events, distinctive attractions, interactive art installations, extraordinary design elements, unique retail, ground-breaking technology, bars and eateries and much more. AREA15's curated mix of dynamic destinations - including Meow Wolf's Omega Mart, Lost Spirits Distillery, Illuminarium, Dueling Axes, Five Iron Golf, The Beast by Todd English, Wink World: Portals Into the Infinite, Museum Fiasco, Virtualis VR, Emporium Arcade Bar and many more - represents what's next in experiential entertainment. With a robust, ever-changing roster of concerts, events, immersive art exhibitions, out-of-this-world nightlife and boundary-pushing production shows, AREA15 attracts visitors of all ages.",
+            price: "FREE"
+        },
+        (error, createdAttraction) => {
+            Location.findOne({location: "Las Vegas"}, (error, foundLocation) => {
+                foundLocation.attractions.push(createdAttraction);
+                foundLocation.save((error, savedNewAttraction) => {} );
+            })
+        }
+    );
+
+    Attractions.create(
+        {
+            place: "Fremont Street",
+            image: "https://vegasexperience.com/wp-content/uploads/2017/12/Fremont-Street-Experience.jpg",
+            descriptionOfPlace: "In the older part of Las Vegas, known as Downtown, you will find the pedestrian-only Fremont Street. The area is home to many unique attractions, such as a five-block section that has overhead LED lights that illuminate the sky with different patterns as you walk beneath them. At night a music and lights show takes over the street at regular intervals. There are a number of shows and street performers on Fremont Street.",
+            price: "FREE"
+        },
+        (error, createdAttraction) => {
+            Location.findOne({location: "Las Vegas"}, (error, foundLocation) => {
+                foundLocation.attractions.push(createdAttraction);
+                foundLocation.save((error, savedNewAttraction) => {} );
+            })
+        }
+    );
+
+    
+
+    Attractions.create(
+        {
+            place: "The Las Vegas Strip",
+            image: "https://thegetaway.mblycdn.com/tg/resized/2020/11/800x650/GettyImages-AB11023.jpg",
+            descriptionOfPlace: "The Las Vegas Strip is what most people associate with the city of Las Vegas. Best viewed at night when the city comes alive with thousands of illuminated neon lights. Plan to spend a few hours wandering along the strip taking in the sights, including the enormous entertainment places that house hotels, shows, and dining options. To truly experience all that Las Vegas has to offer, you should stay in the heart of everything on The Strip.",
+            price: "Daytime entry into AREA15 is free. Late-night entry on Fridays and Saturdays after 10 p.m. is $15 for those ages 21+. You can save $5 on late-night entry by securing an entry pass BEFORE you arrive."
+        },
+        (error, createdAttraction) => {
+            Location.findOne({location: "Las Vegas"}, (error, foundLocation) => {
+                foundLocation.attractions.push(createdAttraction);
+                foundLocation.save((error, savedNewAttraction) => {} );
+            })
+        }
+    );
 
     // Create New York Attractions 
     Attractions.create(
