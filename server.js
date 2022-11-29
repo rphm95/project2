@@ -2,6 +2,9 @@ const { response } = require('express');
 const express = require('express');
 const app = express();
 
+// trying to create a log in 
+require('dotenv').config()
+
 const seedLocation = require('./models/travelSeed.js')
 const seedAttractions = require('./models/attractionsSeed.js')
 
