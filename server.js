@@ -326,7 +326,10 @@ app.get('/seed/spots', (req, res) => {
 
 app.get('/', (req, res) => {
     res.render(
-        'index.ejs'
+        'index.ejs', 
+        {
+            currentUser: req.session.currentUser // adding session  .currentUser
+        }
     )
 })
 

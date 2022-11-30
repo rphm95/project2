@@ -58,9 +58,9 @@ router.get('/locations/:id', (req, res) => {
 
 // ----- index route 
 
-router.get('/', (req, res) => {
-    res.render('index.ejs');
-})
+// router.get('/', (req, res) => {
+//     res.render('index.ejs');
+// })
 
 router.get('/locations', (req, res) => {
     // console.log(req.body.sortBy)
