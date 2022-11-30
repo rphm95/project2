@@ -214,3 +214,57 @@ html{
     from, to { border-color: transparent }
     50% { border-color: orange }
 }
+
+
+/* ========= STYLE BUTTONS ========== */
+
+/* btncover1= index first page
+btn cover2= new login page */
+
+#btncover1, #btncover2, #btncover3, #delete-location {
+    transform: translate(0);
+    overflow: hidden;
+    cursor:pointer;
+}
+
+#btncover1::before, #btncover2::before, #btncover3::before, #delete-location::before {
+    content: "";
+    position: absolute;
+    background: white;
+    width: 8px;
+    top: 0;
+    bottom: 0;
+    left: -32px;
+    transform: rotate(-16deg);
+    filter: blur(6px);
+}
+
+#btncover1:hover::before, #btncover2:hover::before, #btncover3:hover::before, #delete-location:hover::before{
+    left: calc(100% + 32px);
+    transition: 0.9s ease-in-out;
+}
+
+
+#btn-transparent1{
+    background: transparent;
+    transform: translate(0);
+    overflow: hidden;
+    cursor:pointer;
+}
+
+#btn-transparent1::before{
+    content: "";
+    position: absolute;
+    background: green;
+    width: 8px;
+    top: 0;
+    bottom: 0;
+    left: -32px;
+    transform: rotate(-16deg);
+    filter: blur(6px);
+}
+
+#btn-transparent1:hover::before{
+    left: calc(100% + 32px);
+    transition: 0.8s ease-in-out;
+}
