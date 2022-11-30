@@ -2,8 +2,18 @@ const { response } = require('express');
 const express = require('express');
 const app = express();
 
-// trying to create a log in 
+
+
+// --------------- trying to create a log in 
+// const MongoDBSession = require("connect-mongodb-session")(session);
+const session = require('express-session')
 require('dotenv').config()
+const PORT = process.env.PORT
+const mongodbURI = process.env.MONGODBURI
+// ----------------------------------------------------
+
+
+
 
 const seedLocation = require('./models/travelSeed.js')
 const seedAttractions = require('./models/attractionsSeed.js')
@@ -17,13 +27,43 @@ app.use(express.urlencoded({extended: true}));
 app.use(methodOverride('_method'))
 app.use(express.json());
 
+
+
+app.use(express.static('public'))
+
+// ==================== USER =================
+const isAuthenticated = (req, res, next) => {
+    if (req.session.currentUser) {
+      return next()
+    } else {
+      res.redirect('/sessions/new')
+    }
+}
+
+app.use(
+    session({
+      secret: process.env.SECRET, //a random string do not copy this value or your stuff will get hacked
+      resave: false, // default more info: https://www.npmjs.com/package/express-session#resave
+      saveUninitialized: false // default  more info: https://www.npmjs.com/package/express-session#resave
+    })
+)
+
+  
+// ------------- trying to create a log in user
+const sessionsController = require('./controllers/sessions_controller.js')
+app.use('/sessions', sessionsController)
+
+const userController = require('./controllers/users_controller.js')
+app.use('/user', userController)
+
+
+
+// ----------------------------------------------------------------
 const locationsController = require('./controllers/locations.js');
 app.use(locationsController);
 
 const attractionsController = require('./controllers/attractions.js');
 app.use(attractionsController);
-
-app.use(express.static('public'))
 
 
 const Location = require('./models/travelSchema.js') // --- on controllers folder
@@ -31,10 +71,17 @@ const Attractions = require('./models/attractions.js'); // --- on controllers fo
 // const Attraction = require('./models/attractions.js');
 
 // HOROKU HAS A ENVORIMENT VARIABLE, and port is a port that horoku will set up... so we create a variable PORT 3000, so if im running locally it runs on PORT 3000 but if its on horoku we assing PORT=process.env.PORT
-let PORT= 3000
-if(process.env.PORT){
-    PORT=process.env.PORT
-}
+// let PORT= 3000
+// if(process.env.PORT){
+//     PORT=process.env.PORT
+// }
+
+
+
+  
+
+
+
 
 
 // ============== SEED =============
@@ -294,6 +341,16 @@ app.listen(PORT, () =>{
     console.log('listening...');
 })
 
-mongoose.connect('mongodb+srv://rphm95:R160589867@sei.7r3v4df.mongodb.net/?retryWrites=true&w=majority', () => {
+
+// comment this out if it breaks
+mongoose.connect(mongodbURI, () => {
     console.log('connected to mongo')
 })
+
+// mongoose.connect('mongodb+srv://rphm95:R160589867@sei.7r3v4df.mongodb.net/?retryWrites=true&w=majority', () => {
+//     console.log('connected to mongo')
+// })
+
+// creating user 
+
+

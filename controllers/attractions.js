@@ -1,10 +1,19 @@
 const express = require('express');
 const router = express.Router();
 
+// const session = require('express-session')
+
 const Location = require('../models/travelSchema.js');
 const Attraction = require('../models/attractions.js');
 const attractionsSeed = require('../models/attractionsSeed.js');
 
+const isAuthenticated = (req, res, next) => {
+    if (req.session.currentUser) {
+      return next()
+    } else {
+      res.redirect('/sessions/new')
+    }
+}
 
 // ----- new route
 
@@ -12,7 +21,8 @@ router.get('/attractions/new', (req, res) => {
     Location.find({}, (error, allLocations) => {
         res.render('attractions/new.ejs', 
             {   
-                location: allLocations
+                location: allLocations,
+                currentUser: req.session.currentUser // adding session  .currentUser
             }
         )   
     })
@@ -41,7 +51,8 @@ router.get('/attractions', (req, res) => {
                 'attractions/index.ejs',
                 {
                     attractions: foundAttraction,
-                    select: "recent"
+                    select: "recent",
+                    currentUser: req.session.currentUser // adding session  .currentUser
                 }
             )
         }).sort({updatedAt: 1})
@@ -52,7 +63,8 @@ router.get('/attractions', (req, res) => {
                 'attractions/index.ejs',
                 {
                     attractions: foundAttraction,
-                    select: "alphabetically"
+                    select: "alphabetically",
+                    currentUser: req.session.currentUser // adding session  .currentUser
                 }
             )
         }).sort({place: 1})
@@ -63,7 +75,8 @@ router.get('/attractions', (req, res) => {
                 'attractions/index.ejs',
                 {
                     attractions: data,
-                    select: "none"
+                    select: "none",
+                    currentUser: req.session.currentUser // adding session  .currentUser
                 }
             );
         })
@@ -79,6 +92,7 @@ router.get('/attractions/:id', (req, res) => {
             res.render('attractions/show.ejs', 
                 {
                     attractions: attraction,
+                    currentUser: req.session.currentUser // adding session  .currentUser
                     // location: foundLocation
                 }
             )
@@ -89,7 +103,7 @@ router.get('/attractions/:id', (req, res) => {
 
 // ----- delete route
 
-router.delete('/attractions/:id', (req, res) => {
+router.delete('/attractions/:id', isAuthenticated, (req, res) => {
     Attraction.findByIdAndRemove(req.params.id, (err, foundAttraction) => {
         Location.findOne({'attractions._id': req.params.id}, (err, foundLocation) => { 
             foundLocation.attractions.id(req.params.id).remove();
@@ -102,7 +116,7 @@ router.delete('/attractions/:id', (req, res) => {
 
 // ------ edit route
 
-router.put('/attractions/:id', (req, res) => {
+router.put('/attractions/:id', isAuthenticated, (req, res) => {
     Attraction.findByIdAndUpdate(req.params.id, req.body, {new:true}, (error, uptadedAttraction) => {
         Location.findOne({'attractions._id': req.params.id}, (err, foundLocation) => {
             if(foundLocation._id.toString() !== req.body.locationsId) {
@@ -137,7 +151,8 @@ router.get('/attractions/:id/edit', (req, res) => {
                     {
                         attractions: foundAttraction,
                         locations: allLocations,
-                        locationAttraction: foundLocationAttraction
+                        locationAttraction: foundLocationAttraction,
+                        currentUser: req.session.currentUser // adding session  .currentUser
 
                     }
                 )

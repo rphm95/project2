@@ -1,8 +1,18 @@
 const express = require('express');
 const router= express.Router();
+
+// const session = require('express-session')
+
 const Location = require('../models/travelSchema.js');
 const Attraction = require('../models/attractions.js');
 
+const isAuthenticated = (req, res, next) => {
+    if (req.session.currentUser) {
+      return next()
+    } else {
+      res.redirect('/sessions/new')
+    }
+}
 
 
 // ----- new route 
@@ -12,7 +22,8 @@ router.get('/locations/new', (req, res) => {
         res.render(
             'location/new.ejs',
             {
-                locations: newLocation
+                locations: newLocation,
+                currentUser: req.session.currentUser // adding session .currentUser
             }
         )
     })
@@ -37,7 +48,8 @@ router.get('/locations/:id', (req, res) => {
         res.render(
             'location/locationShow.ejs',
             {
-                locations: foundLocation
+                locations: foundLocation,
+                currentUser: req.session.currentUser // adding session user
             }
         )
     });
@@ -58,7 +70,8 @@ router.get('/locations', (req, res) => {
                 'location/index2.ejs',
                 {
                     locations: foundLocation,
-                    select: "recent"
+                    select: "recent",
+                    currentUser: req.session.currentUser // adding session.currentUser
                 }
             )
         }).sort({updatedAt: 1})
@@ -69,7 +82,8 @@ router.get('/locations', (req, res) => {
                 'location/index2.ejs',
                 {
                     locations: foundLocation,
-                    select: "alphabetically"
+                    select: "alphabetically",
+                    currentUser: req.session.currentUser // adding session  .currentUser
                 }
             )
         }).sort({location: 1})
@@ -80,7 +94,8 @@ router.get('/locations', (req, res) => {
                 'location/index2.ejs',
                 {
                     locations: data,
-                    select: "none"
+                    select: "none",
+                    currentUser: req.session.currentUser // adding session  .currentUser
                 }
             );
         })
@@ -91,7 +106,7 @@ router.get('/locations', (req, res) => {
 
 // ----- delete route 
 
-router.delete('/locations/:id', (req, res) => {
+router.delete('/locations/:id', isAuthenticated, (req, res) => {
     Location.findByIdAndRemove(req.params.id, (err, data) => {
         const attractionIDs = []
         for (let i= 0; i < data.attractions.length; i++) {
@@ -113,7 +128,7 @@ router.delete('/locations/:id', (req, res) => {
 
 // ----- edit route 
 
-router.put('/locations/:id', (req, res) => {
+router.put('/locations/:id', isAuthenticated, (req, res) => {
     Location.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err, uptadedLocation) => {
         res.redirect('/locations')
     })
@@ -123,7 +138,8 @@ router.get('/locations/:id/edit', (req, res) => {
     Location.findById(req.params.id, (err, foundLocation) => {
         res.render('location/edit.ejs',
             {
-                locations: foundLocation
+                locations: foundLocation,
+                currentUser: req.session.currentUser // adding session  .currentUser
             }
         )
     })

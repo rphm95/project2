@@ -35,6 +35,7 @@
             </p>
         </div>
         <div class="buttons">
+            <% if (currentUser) { %> 
             <button type="button" id="delete-location" class="btn btn-danger">
                 <form action="/locations/<%=locations.id%>?_method=DELETE" method="POST">
                     <input type="submit" value="Delete Destination" style='border: none; color: black; background: none;'/>
@@ -43,6 +44,10 @@
             <button type="button" id="try" class="btn btn-outline-success">
                 <a href="/locations/<%=locations.id%>/edit" style='text-decoration: none; color: black; background: none;'>Edit Destination</a>
             </button>
+            <% } else { %> 
+                <p>To Edit and Delete: <a style="text-decoration: underline" href="/user/new">Sign Up</a> or <a style="text-decoration: underline"  href="/sessions/new">Log In</a></p>
+                
+            <% } %>
         </div>
         
         
